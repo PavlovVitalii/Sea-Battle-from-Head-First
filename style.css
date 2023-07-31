@@ -9,3 +9,36 @@ body{
     margin: auto;
     background: url("image/board.jpg");
 }
+
+#messageArea{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgb(83, 175, 19);
+}
+
+table{
+    position: absolute;
+    top: 98px;
+    left: 173;
+    border-spacing: 0px;
+}
+
+td{
+    width: 94px;
+    height: 94px;
+}
+
+form{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 15px;
+    background-color: rgb(83, 175, 19);
+}
+
+form input {
+    border-color: rgb(83, 175, 19);
+    background-color: rgb(152, 207, 113);
+    font-size: 1em;
+}
