@@ -31,13 +31,20 @@ const model = {
     for (let i = 0; i < this.shipLength; i++) {
       const ship = this.ships[i];
       const index = ship.locations.indexOf(guess);
+
       if (index >= 0) {
-        this.hits[index] = "hit";
-        if (condition) {
-            
+        ship.hits[index] = "hit";
+        view.displayHit(guess);
+        view.displayMessage("HIT!");
+
+        if (this.isSunk(ship)) {
+          this.shipSunk++;
         }
         return true;
       }
+
+      view.displayMiss(guess);
+      view.displayMessage("You missed.");
     }
 
     return false;
@@ -47,3 +54,22 @@ const model = {
     return ship.hits.includes("") ? false : true;
   },
 };
+
+const controller = {
+    guesses: 0,
+
+    processGuess: function (guess) {
+        
+    }
+}
+
+model.fire("53");
+model.fire("06");
+model.fire("16");
+model.fire("26");
+model.fire("34");
+model.fire("24");
+model.fire("44");
+model.fire("12");
+model.fire("11");
+model.fire("10");
