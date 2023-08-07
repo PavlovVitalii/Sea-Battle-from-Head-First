@@ -55,21 +55,84 @@ const model = {
   },
 };
 
-const controller = {
-    guesses: 0,
+var controller = {
+  guesses: 0,
 
-    processGuess: function (guess) {
-        
+  processGuess: function (guess) {
+    var location = this.parseGuess(guess);
+    console.log(location);
+    if (location) {
+      this.guesses++;
+      var hit = model.fire(location);
+      if (hit && model.shipSunk === model.numShips) {
+        view.displayMessage(
+          `You sunk all my battleships, in ${this.guesses} guesses`
+        );
+      }
+    }
+  },
+
+  parseGuess: function (guess) {
+    const alphabet = ["A", "B", "C", "D", "E", "F", "G"];
+
+    if (guess === null || guess.length !== 2) {
+      alert("Oops, please enter a letter and a number on the board.");
+    } else {
+      var firstChar = guess[0];
+     var row = alphabet.indexOf(firstChar);
+      var column = guess[1];
+
+      if (isNaN(row) || isNaN(column)) {
+        alert("Oops, that isn`t on the board.");
+      } else if (
+        row < 0 ||
+        row >= model.boardSize ||
+        column < 0 ||
+        column >= model.boardSize
+      ) {
+        alert("Oops that`s off the board");
+      } else {
+        return row + column;
+      }
+    }
+    return null;
+  },
+};
+
+function init (){
+    const fireButton = document.getElementById("fireButton");
+    fireButton.onclick = handleFireButton;
+    const guessInput = document.getElementById("guessInput");
+    guessInput.onkeypress = handleKeyPress;
+}
+
+function handleKeyPress(e) {
+    const fireButton = document.getElementById("fireButton");
+    if (e.keyCode === 13) {
+        fireButton.click();
+        return false;
     }
 }
 
-model.fire("53");
-model.fire("06");
-model.fire("16");
-model.fire("26");
-model.fire("34");
-model.fire("24");
-model.fire("44");
-model.fire("12");
-model.fire("11");
-model.fire("10");
+function handleFireButton(){
+    const guessInput = document.getElementById("guessInput");
+    const guess = guessInput.value;
+    controller.processGuess(guess);
+    guessInput.value = "";
+}
+
+window.onload = init();
+
+
+
+    // controller.parseGuess("A6");
+    // controller.parseGuess("B6");
+    // controller.parseGuess("C6");
+
+    // controller.parseGuess("C4");
+    // controller.parseGuess("D4");
+    // controller.parseGuess("E4");
+
+    // controller.parseGuess("B0");
+    // controller.parseGuess("B1");
+    // controller.parseGuess("B2");
